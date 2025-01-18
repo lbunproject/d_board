@@ -196,8 +196,12 @@ with tabs[0]:
         # Multisig Balances Section
         st.markdown("### 🔒 Multisig Balances")
         multisig_metrics = [
-            ("Mining Rewards (MESO)", f"{fetch_meso_balance('terra10c9w7pf02fr7v8xc66s6m0hf672rj07t28zhvquve6np7hgj368qes797c'):,.6f}"),
             ("Validators (LUNC)", f"{fetch_native_balance('terra1fap9lefsjjvv0phhry8km2garv5cxnd9m5ne83uakg7cdqg5uvhqzjgtva'):,.6f}")
+            ("Reserve Pool (LUNC)", f"{fetch_native_balance('terra165qakktyzk5le5cwklj0elh7u2qsfq56kcgerggl6h5jd5uhmdpsswftv3'):,.6f}"),
+            ("Operations Pool (LUNC)", f"{fetch_native_balance('terra10u93zelv44ddf3g82q7mrat43fey33etfwx5cnh5y2ryu73uvk4q0qytyd'):,.6f}"),
+            ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1xajrj06juslnjhnlwd4csay29yxaas2d5700seaccaa2gt9z54ms5wwyy7'):,.6f}"),
+            ("Development Pool (LUNC)", f"{fetch_native_balance('terra1eah8zs7datkz67u56p0cu4kakf3dagy673axx7j0n4et5mvxk3ls6lm8z8'):,.6f}"),
+            ("Mining Rewards (MESO)", f"{fetch_meso_balance('terra10c9w7pf02fr7v8xc66s6m0hf672rj07t28zhvquve6np7hgj368qes797c'):,.6f}"),
         ]
 
         for i in range(0, len(multisig_metrics), 2):
@@ -207,12 +211,10 @@ with tabs[0]:
                 render_card(cols[1], multisig_metrics[i+1][0], multisig_metrics[i+1][1])
 
         # DAO Wallets Section
-        st.markdown("### 🏛️ DAO Wallets Balances")
+        st.markdown("### 🏛️ DAO Wallet Balances")
         dao_wallets = {
-            "Al": "terra18jxqe39h43499zkcmqhmn37k25h7up3j4d8yee",
-            "Di": "terra1j49q86q5xctmdmstzv4f344jwyhe94qyxfq90w",
-            "Ri": "terra1mqr4x5hgdcqkcymzr7td2zpqq5epjcej00zd90",
-            "Re": "terra1uvtvrqvxqwnj344zw4rz3l2h45y53qqemlxhz2",
+            ("LUNC", f"{fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
+            ("MESO ", f"{fetch_meso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
         }
         dao_metrics = []
         for name, address in dao_wallets.items():
