@@ -96,21 +96,39 @@ def render_query_result(title, result):
     else:
         st.json(result)
 
-# CSS styling for cards
+# CSS styling for cards with light and dark mode support
 st.markdown(
     """
     <style>
         .card {
-            background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 16px;
             margin: 4px 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+        /* Light mode styles */
+        @media (prefers-color-scheme: light) {
+            .card {
+                background-color: #f9f9f9;
+                color: #000;
+            }
+        }
+
+        /* Dark mode styles */
+        @media (prefers-color-scheme: dark) {
+            .card {
+                background-color: #2e2e2e;
+                color: #ffffff;
+                border: 1px solid #444;
+            }
+        }
+
         .card h4 {
             margin: 0 0 8px 0;
         }
+
         .card p {
             margin: 0;
         }
@@ -122,7 +140,15 @@ st.markdown(
 # Helper function to render a card
 def render_card(col, title, value):
     with col:
-        st.markdown(f'<div class="card"><h4>{title}</h4><p>{value}</p></div>', unsafe_allow_html=True)
+        st.markdown(
+            f"""
+            <div class="card">
+                <h4>{title}</h4>
+                <p>{value}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 # Contract address for queries
 CONTRACT_ADDRESS = "terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms"
