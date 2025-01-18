@@ -196,7 +196,7 @@ with tabs[0]:
         # Multisig Balances Section
         st.markdown("### 🔒 Multisig Balances")
         multisig_metrics = [
-            ("Validators (LUNC)", f"{fetch_native_balance('terra1fap9lefsjjvv0phhry8km2garv5cxnd9m5ne83uakg7cdqg5uvhqzjgtva'):,.6f}"),
+            ("Validators Pool (LUNC)", f"{fetch_native_balance('terra1fap9lefsjjvv0phhry8km2garv5cxnd9m5ne83uakg7cdqg5uvhqzjgtva'):,.6f}"),
             ("Reserve Pool (LUNC)", f"{fetch_native_balance('terra165qakktyzk5le5cwklj0elh7u2qsfq56kcgerggl6h5jd5uhmdpsswftv3'):,.6f}"),
             ("Operations Pool (LUNC)", f"{fetch_native_balance('terra10u93zelv44ddf3g82q7mrat43fey33etfwx5cnh5y2ryu73uvk4q0qytyd'):,.6f}"),
             ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1xajrj06juslnjhnlwd4csay29yxaas2d5700seaccaa2gt9z54ms5wwyy7'):,.6f}"),
@@ -213,13 +213,12 @@ with tabs[0]:
         # DAO Wallets Section
         st.markdown("### 🏛️ DAO Wallet Balances")
         dao_wallets = {
+
+        }
+        dao_metrics = [
             ("LUNC", f"{fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
             ("MESO ", f"{fetch_meso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
-        }
-        dao_metrics = []
-        for name, address in dao_wallets.items():
-            balance = fetch_native_balance(address)
-            dao_metrics.append((f"{name.capitalize()} (LUNC)", f"{balance:,.6f}"))
+        ]
 
         for i in range(0, len(dao_metrics), 2):
             cols = st.columns(2)
