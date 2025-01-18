@@ -163,6 +163,7 @@ with tabs[0]:
         st.markdown("### 📊 TBC Metrics")
         available_meso = fetch_meso_balance(CONTRACT_ADDRESS)
         meso_curve_info = fetch_meso_curve_info()
+        tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
         prices = fetch_oracle_prices()
 
         circulating_supply = float(meso_curve_info.get("supply", 0)) / 1_000_000
@@ -183,8 +184,9 @@ with tabs[0]:
             ("Spot Price (LUNC Ratio)", f"{spot_price:.6f}"),
             ("Price (USD)", f"{price:,.6f}"),
             ("Market Cap (USD)", f"{market_cap:,.2f}"),
-            ("Total Value Locked (USD)", f"{tvl:,.2f}"),
-            ("Tax Collected (LUNC)", f"{tax_collected:,.6f}")
+            #("Total Value Locked (USD)", f"{tvl:,.2f}"),
+            ("Tax Collected (LUNC)", f"{tax_collected:,.6f}"),
+            ("TBC Reserve (LUNC)", f"{tbc_reserve:,.6f}")
         ]
 
         for i in range(0, len(metrics), 2):
