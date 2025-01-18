@@ -196,7 +196,7 @@ with tabs[0]:
         # Multisig Balances Section
         st.markdown("### 🔒 Multisig Balances")
         multisig_metrics = [
-            ("Validators (LUNC)", f"{fetch_native_balance('terra1fap9lefsjjvv0phhry8km2garv5cxnd9m5ne83uakg7cdqg5uvhqzjgtva'):,.6f}")
+            ("Validators (LUNC)", f"{fetch_native_balance('terra1fap9lefsjjvv0phhry8km2garv5cxnd9m5ne83uakg7cdqg5uvhqzjgtva'):,.6f}"),
             ("Reserve Pool (LUNC)", f"{fetch_native_balance('terra165qakktyzk5le5cwklj0elh7u2qsfq56kcgerggl6h5jd5uhmdpsswftv3'):,.6f}"),
             ("Operations Pool (LUNC)", f"{fetch_native_balance('terra10u93zelv44ddf3g82q7mrat43fey33etfwx5cnh5y2ryu73uvk4q0qytyd'):,.6f}"),
             ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1xajrj06juslnjhnlwd4csay29yxaas2d5700seaccaa2gt9z54ms5wwyy7'):,.6f}"),
