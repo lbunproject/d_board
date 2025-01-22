@@ -4,10 +4,10 @@ import json
 import base64
 
 # Set page configuration
-st.set_page_config(page_title="MESO Dashboard", layout="wide")
+st.set_page_config(page_title="WESO Dashboard", layout="wide")
 
-# Function to fetch MESO contract balance for a specific address
-def fetch_meso_balance(address):
+# Function to fetch WESO contract balance for a specific address
+def fetch_weso_balance(address):
     query_data = {
         "balance": {"address": address}
     }
@@ -16,7 +16,7 @@ def fetch_meso_balance(address):
 
     response = requests.get(url)
     if response.status_code != 200:
-        st.error(f"Failed to fetch MESO balance for {address}. Error: {response.status_code} - {response.reason}")
+        st.error(f"Failed to fetch WESO balance for {address}. Error: {response.status_code} - {response.reason}")
         return 0
     data = response.json()
     return float(data.get("data", {}).get("balance", 0)) / 1_000_000
@@ -36,8 +36,8 @@ def fetch_native_balance(address):
             return float(balance.get("amount", 0)) / 1_000_000
     return 0
 
-# Function to fetch MESO curve info
-def fetch_meso_curve_info():
+# Function to fetch WESO curve info
+def fetch_weso_curve_info():
     query_data = {
         "curve_info": {}
     }
@@ -46,7 +46,7 @@ def fetch_meso_curve_info():
 
     response = requests.get(url)
     if response.status_code != 200:
-        st.error(f"Failed to fetch MESO curve info. Error: {response.status_code} - {response.reason}")
+        st.error(f"Failed to fetch WESO curve info. Error: {response.status_code} - {response.reason}")
         return {}
     return response.json().get("data", {})
 
@@ -159,26 +159,26 @@ tabs = st.tabs(["Metrics", "Advanced Queries"])
 # Metrics Tab
 with tabs[0]:
     try:
-        # MESO Metrics Section
+        # WESO Metrics Section
         st.markdown("### 📊 TBC Metrics")
-        available_meso = fetch_meso_balance(CONTRACT_ADDRESS)
-        meso_curve_info = fetch_meso_curve_info()
+        available_weso = fetch_weso_balance(CONTRACT_ADDRESS)
+        weso_curve_info = fetch_weso_curve_info()
         tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
         prices = fetch_oracle_prices()
 
-        circulating_supply = float(meso_curve_info.get("supply", 0)) / 1_000_000
-        spot_price = float(meso_curve_info.get("spot_price", 0)) / 1_000_000
-        reserve = float(meso_curve_info.get("reserve", 0)) / 1_000_000
-        tax_collected = float(meso_curve_info.get("tax_collected", 0)) / 1_000_000
+        circulating_supply = float(weso_curve_info.get("supply", 0)) / 1_000_000
+        spot_price = float(weso_curve_info.get("spot_price", 0)) / 1_000_000
+        reserve = float(weso_curve_info.get("reserve", 0)) / 1_000_000
+        tax_collected = float(weso_curve_info.get("tax_collected", 0)) / 1_000_000
         reserve_price = prices.get("LUNC", 0)
 
-        total_supply = circulating_supply + available_meso
+        total_supply = circulating_supply + available_weso
         price = spot_price * reserve_price
         market_cap = circulating_supply * price
         tvl = reserve * reserve_price
 
         metrics = [
-            ("Available Supply", f"{available_meso:,.6f}"),
+            ("Available Supply", f"{available_weso:,.6f}"),
             ("Circulating Supply", f"{circulating_supply:,.6f}"),
             ("Total Supply", f"{total_supply:,.6f}"),
             ("Spot Price (LUNC Ratio)", f"{spot_price:.6f}"),
@@ -203,7 +203,7 @@ with tabs[0]:
             ("Operations Pool (LUNC)", f"{fetch_native_balance('terra10u93zelv44ddf3g82q7mrat43fey33etfwx5cnh5y2ryu73uvk4q0qytyd'):,.6f}"),
             ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1xajrj06juslnjhnlwd4csay29yxaas2d5700seaccaa2gt9z54ms5wwyy7'):,.6f}"),
             ("Development Pool (LUNC)", f"{fetch_native_balance('terra1eah8zs7datkz67u56p0cu4kakf3dagy673axx7j0n4et5mvxk3ls6lm8z8'):,.6f}"),
-            ("Mining Rewards (MESO)", f"{fetch_meso_balance('terra10c9w7pf02fr7v8xc66s6m0hf672rj07t28zhvquve6np7hgj368qes797c'):,.6f}")
+            ("Mining Rewards (WESO)", f"{fetch_weso_balance('terra10c9w7pf02fr7v8xc66s6m0hf672rj07t28zhvquve6np7hgj368qes797c'):,.6f}")
         ]
 
         for i in range(0, len(multisig_metrics), 2):
@@ -219,7 +219,7 @@ with tabs[0]:
         }
         dao_metrics = [
             ("LUNC", f"{fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
-            ("MESO ", f"{fetch_meso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
+            ("WESO ", f"{fetch_weso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
         ]
 
         for i in range(0, len(dao_metrics), 2):
