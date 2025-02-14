@@ -196,7 +196,7 @@ with tabs[0]:
                 render_card(cols[1], metrics[i+1][0], metrics[i+1][1])
 
         # DAO Wallets Section
-        st.markdown("### 🏛️ DAO Treasury")
+        st.markdown("### 🏛️ Luna Classic DAO Treasury")
         dao_wallets = {
 
         }
