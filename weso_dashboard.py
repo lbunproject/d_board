@@ -196,8 +196,9 @@ with tabs[0]:
 
         # DAO Wallets Section
         st.markdown("### 🏛️ Luna Classic DAO Treasury")
+        tnb = fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
         dao_metrics = [
-            ("LUNC", f"{fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
+            ("LUNC", f"{tnb:,.6f} (${tnb * reserve_price:,.2f})"),
             ("WESO ", f"{fetch_weso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
         ]
 
