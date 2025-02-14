@@ -195,25 +195,8 @@ with tabs[0]:
             if i + 1 < len(metrics):
                 render_card(cols[1], metrics[i+1][0], metrics[i+1][1])
 
-        # Multisig Balances Section
-        st.markdown("### 🔒 Multisig Balances")
-        multisig_metrics = [
-            ("Validators Pool (LUNC)", f"{fetch_native_balance('terra1fap9lefsjjvv0phhry8km2garv5cxnd9m5ne83uakg7cdqg5uvhqzjgtva'):,.6f}"),
-            ("Reserve Pool (LUNC)", f"{fetch_native_balance('terra165qakktyzk5le5cwklj0elh7u2qsfq56kcgerggl6h5jd5uhmdpsswftv3'):,.6f}"),
-            ("Operations Pool (LUNC)", f"{fetch_native_balance('terra10u93zelv44ddf3g82q7mrat43fey33etfwx5cnh5y2ryu73uvk4q0qytyd'):,.6f}"),
-            ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1xajrj06juslnjhnlwd4csay29yxaas2d5700seaccaa2gt9z54ms5wwyy7'):,.6f}"),
-            ("Development Pool (LUNC)", f"{fetch_native_balance('terra1eah8zs7datkz67u56p0cu4kakf3dagy673axx7j0n4et5mvxk3ls6lm8z8'):,.6f}"),
-            ("Mining Rewards (WESO)", f"{fetch_weso_balance('terra10c9w7pf02fr7v8xc66s6m0hf672rj07t28zhvquve6np7hgj368qes797c'):,.6f}")
-        ]
-
-        for i in range(0, len(multisig_metrics), 2):
-            cols = st.columns(2)
-            render_card(cols[0], multisig_metrics[i][0], multisig_metrics[i][1])
-            if i + 1 < len(multisig_metrics):
-                render_card(cols[1], multisig_metrics[i+1][0], multisig_metrics[i+1][1])
-
         # DAO Wallets Section
-        st.markdown("### 🏛️ DAO Wallet Balances")
+        st.markdown("### 🏛️ DAO Treasury")
         dao_wallets = {
 
         }
@@ -227,7 +210,23 @@ with tabs[0]:
             render_card(cols[0], dao_metrics[i][0], dao_metrics[i][1])
             if i + 1 < len(dao_metrics):
                 render_card(cols[1], dao_metrics[i+1][0], dao_metrics[i+1][1])
-    
+
+        # Multisig Balances Section
+        st.markdown("### 🔒 Sub-DAO Treasury")
+        multisig_metrics = [
+            ("Validators Pool (LUNC)", f"{fetch_native_balance('terra17x9tpp4ngn7hywnaleeqwjszyzws7hpy8tx0w35swyevuf9g4c9ssl7tml'):,.6f}"),
+            ("Reserve Pool (LUNC)", f"{fetch_native_balance('terra100gz7lhvehugvauqj9zwsyjy9vjzfxvr0cdd4vgq8k3nfc4w280qskc9cg'):,.6f}"),
+            ("Operations Pool (LUNC)", f"{fetch_native_balance('terra1j485p4zca6dlsf0ltze6elv3haqqv7s9pz7rngywsvh5k45jvkvqpm0vnd'):,.6f}"),
+            ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1hh3f6pd97n69xft4jx2540v5srp0lpq4dwl2cjzvjdkca4vrnvksw0lqy2'):,.6f}"),
+            ("Development Pool (LUNC)", f"{fetch_native_balance('terra18nc742rm8ckmad0h56pqnquug6axlcmy988mavhruha209r8msfse2agex'):,.6f}"),
+            ("Mining Rewards (WESO)", f"{fetch_weso_balance('terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7'):,.6f}")
+        ]
+
+        for i in range(0, len(multisig_metrics), 2):
+            cols = st.columns(2)
+            render_card(cols[0], multisig_metrics[i][0], multisig_metrics[i][1])
+            if i + 1 < len(multisig_metrics):
+                render_card(cols[1], multisig_metrics[i+1][0], multisig_metrics[i+1][1])   
     
     except Exception as e:
         st.error(f"Error loading Metrics tab: {e}")
