@@ -181,12 +181,11 @@ with tabs[0]:
             ("Available Supply", f"{available_weso:,.6f}"),
             ("Circulating Supply", f"{circulating_supply:,.6f}"),
             ("Total Supply", f"{total_supply:,.6f}"),
-            ("Spot Price (LUNC Ratio)", f"{spot_price:.6f}"),
-            ("Price (USD)", f"{price:,.6f}"),
-            ("Market Cap (USD)", f"{market_cap:,.2f}"),
-            #("Total Value Locked (USD)", f"{tvl:,.2f}"),
+            ("Spot Price (LUNC Ratio)", f"{spot_price:.6f} (${price:,.6f})"),
+            ("Market Cap (USD)", f"${market_cap:,.2f}"),
+            ("Total Value Locked (USD)", f"${tvl:,.2f}"),
             ("Tax Collected (LUNC)", f"{tax_collected:,.6f}"),
-            ("TBC Reserve (LUNC)", f"{tbc_reserve:,.6f}")
+            ("TBC Reserve (LUNC)", f"{tbc_reserve:,.6f} (${tbc_reserve * reserve_price:,.2f})")
         ]
 
         for i in range(0, len(metrics), 2):
@@ -197,9 +196,6 @@ with tabs[0]:
 
         # DAO Wallets Section
         st.markdown("### 🏛️ Luna Classic DAO Treasury")
-        dao_wallets = {
-
-        }
         dao_metrics = [
             ("LUNC", f"{fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
             ("WESO ", f"{fetch_weso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
@@ -212,14 +208,21 @@ with tabs[0]:
                 render_card(cols[1], dao_metrics[i+1][0], dao_metrics[i+1][1])
 
         # Multisig Balances Section
-        st.markdown("### 🔒 Sub-DAO Treasury")
+        st.markdown("### 🔒 Sub-DAO Treasury Pools")
+        vpnb = fetch_native_balance('terra17x9tpp4ngn7hywnaleeqwjszyzws7hpy8tx0w35swyevuf9g4c9ssl7tml')
+        rpnb = fetch_native_balance('terra100gz7lhvehugvauqj9zwsyjy9vjzfxvr0cdd4vgq8k3nfc4w280qskc9cg')
+        opnb = fetch_native_balance('terra1j485p4zca6dlsf0ltze6elv3haqqv7s9pz7rngywsvh5k45jvkvqpm0vnd')
+        gpnb = fetch_native_balance('terra1hh3f6pd97n69xft4jx2540v5srp0lpq4dwl2cjzvjdkca4vrnvksw0lqy2')
+        dpnb = fetch_native_balance('terra18nc742rm8ckmad0h56pqnquug6axlcmy988mavhruha209r8msfse2agex')
+        mrcw = fetch_weso_balance('terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7')
+
         multisig_metrics = [
-            ("Validators Pool (LUNC)", f"{fetch_native_balance('terra17x9tpp4ngn7hywnaleeqwjszyzws7hpy8tx0w35swyevuf9g4c9ssl7tml'):,.6f}"),
-            ("Reserve Pool (LUNC)", f"{fetch_native_balance('terra100gz7lhvehugvauqj9zwsyjy9vjzfxvr0cdd4vgq8k3nfc4w280qskc9cg'):,.6f}"),
-            ("Operations Pool (LUNC)", f"{fetch_native_balance('terra1j485p4zca6dlsf0ltze6elv3haqqv7s9pz7rngywsvh5k45jvkvqpm0vnd'):,.6f}"),
-            ("Growth Pool (LUNC)", f"{fetch_native_balance('terra1hh3f6pd97n69xft4jx2540v5srp0lpq4dwl2cjzvjdkca4vrnvksw0lqy2'):,.6f}"),
-            ("Development Pool (LUNC)", f"{fetch_native_balance('terra18nc742rm8ckmad0h56pqnquug6axlcmy988mavhruha209r8msfse2agex'):,.6f}"),
-            ("Mining Rewards (WESO)", f"{fetch_weso_balance('terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7'):,.6f}")
+            ("Validators Pool (LUNC)", f"{vpnb:,.6f} (${vpnb * reserve_price:,.2f})"),
+            ("Reserve Pool (LUNC)", f"{rpnb:,.6f} (${rpnb * reserve_price:,.2f})"),
+            ("Operations Pool (LUNC)", f"{opnb:,.6f} (${opnb * reserve_price:,.2f})"),
+            ("Growth Pool (LUNC)", f"{gpnb:,.6f} (${gpnb * reserve_price:,.2f})"),
+            ("Development Pool (LUNC)", f"{dpnb:,.6f} (${dpnb * reserve_price:,.2f})"),
+            ("Mining Rewards (WESO)", f"{mrcw:,.6f} (${mrcw * price:,.2f})"),
         ]
 
         for i in range(0, len(multisig_metrics), 2):
