@@ -7,16 +7,17 @@ import base64
 st.set_page_config(page_title="WESO Dashboard", layout="wide")
 
 # Function to fetch WESO contract balance for a specific address
-def fetch_cw20_balance(address):
+def fetch_cw20_balance(cw20_address, address):
     query_data = {
         "balance": {"address": address}
     }
+    if 
     query_data_encoded = base64.b64encode(json.dumps(query_data).encode()).decode()
-    url = f"https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms/smart/{query_data_encoded}"
+    url = f"https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/{cw20_address}/smart/{query_data_encoded}"
 
     response = requests.get(url)
     if response.status_code != 200:
-        st.error(f"Failed to fetch WESO balance for {address}. Error: {response.status_code} - {response.reason}")
+        st.error(f"Failed to fetch CW20 balance for {address}. Error: {response.status_code} - {response.reason}")
         return 0
     data = response.json()
     return float(data.get("data", {}).get("balance", 0)) / 1_000_000
@@ -199,9 +200,9 @@ with tabs[0]:
         tnb = fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
         dao_metrics = [
             ("LUNC", f"{tnb:,.6f} (${tnb * reserve_price:,.2f})"),
-            ("cwLUNC ", f"{fetch_cw20_balance('terra10fusc7487y4ju2v5uavkauf3jdpxx9h8sc7wsqdqg4rne8t4qyrq8385q6'):,.6f}"),
-            ("WESO ", f"{fetch_cw20_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
-            ("BASE ", f"{fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m'):,.6f}")
+            ("cwLUNC ", f"{fetch_cw20_balance('terra10fusc7487y4ju2v5uavkauf3jdpxx9h8sc7wsqdqg4rne8t4qyrq8385q6', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
+            ("WESO ", f"{fetch_cw20_balance('terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
+            ("BASE ", f"{fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
         ]
 
         for i in range(0, len(dao_metrics), 2):
