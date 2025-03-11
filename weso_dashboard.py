@@ -11,7 +11,7 @@ def fetch_cw20_balance(cw20_address, address):
     query_data = {
         "balance": {"address": address}
     }
-    if 
+
     query_data_encoded = base64.b64encode(json.dumps(query_data).encode()).decode()
     url = f"https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/{cw20_address}/smart/{query_data_encoded}"
 
