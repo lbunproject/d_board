@@ -218,7 +218,7 @@ with tabs[0]:
         opnb = fetch_native_balance('terra1j485p4zca6dlsf0ltze6elv3haqqv7s9pz7rngywsvh5k45jvkvqpm0vnd')
         gpnb = fetch_native_balance('terra1hh3f6pd97n69xft4jx2540v5srp0lpq4dwl2cjzvjdkca4vrnvksw0lqy2')
         dpnb = fetch_native_balance('terra18nc742rm8ckmad0h56pqnquug6axlcmy988mavhruha209r8msfse2agex')
-        mrcw = fetch_cw20_balance('terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7')
+        mrcw = fetch_cw20_balance('terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms', 'terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7')
 
         multisig_metrics = [
             ("Validators Pool (LUNC)", f"{vpnb:,.6f} (${vpnb * reserve_price:,.2f})"),
