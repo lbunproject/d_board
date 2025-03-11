@@ -7,7 +7,7 @@ import base64
 st.set_page_config(page_title="WESO Dashboard", layout="wide")
 
 # Function to fetch WESO contract balance for a specific address
-def fetch_weso_balance(address):
+def fetch_cw20_balance(address):
     query_data = {
         "balance": {"address": address}
     }
@@ -161,7 +161,7 @@ with tabs[0]:
     try:
         # WESO Metrics Section
         st.markdown("### 📊 TBC Metrics")
-        available_weso = fetch_weso_balance(CONTRACT_ADDRESS)
+        available_weso = fetch_cw20_balance(CONTRACT_ADDRESS)
         weso_curve_info = fetch_weso_curve_info()
         tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
         prices = fetch_oracle_prices()
@@ -199,7 +199,9 @@ with tabs[0]:
         tnb = fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
         dao_metrics = [
             ("LUNC", f"{tnb:,.6f} (${tnb * reserve_price:,.2f})"),
-            ("WESO ", f"{fetch_weso_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
+            ("cwLUNC ", f"{fetch_cw20_balance('terra10fusc7487y4ju2v5uavkauf3jdpxx9h8sc7wsqdqg4rne8t4qyrq8385q6'):,.6f}"),
+            ("WESO ", f"{fetch_cw20_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
+            ("BASE ", f"{fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m'):,.6f}")
         ]
 
         for i in range(0, len(dao_metrics), 2):
@@ -215,7 +217,7 @@ with tabs[0]:
         opnb = fetch_native_balance('terra1j485p4zca6dlsf0ltze6elv3haqqv7s9pz7rngywsvh5k45jvkvqpm0vnd')
         gpnb = fetch_native_balance('terra1hh3f6pd97n69xft4jx2540v5srp0lpq4dwl2cjzvjdkca4vrnvksw0lqy2')
         dpnb = fetch_native_balance('terra18nc742rm8ckmad0h56pqnquug6axlcmy988mavhruha209r8msfse2agex')
-        mrcw = fetch_weso_balance('terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7')
+        mrcw = fetch_cw20_balance('terra1a7m26klph99gkyavt4aq6x3mcl363sy9ul7mc9983s0akq683sdq6lzzl7')
 
         multisig_metrics = [
             ("Validators Pool (LUNC)", f"{vpnb:,.6f} (${vpnb * reserve_price:,.2f})"),
