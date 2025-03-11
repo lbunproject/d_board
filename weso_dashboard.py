@@ -162,7 +162,7 @@ with tabs[0]:
     try:
         # WESO Metrics Section
         st.markdown("### 📊 TBC Metrics")
-        available_weso = fetch_cw20_balance(CONTRACT_ADDRESS)
+        available_weso = fetch_cw20_balance('terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms', CONTRACT_ADDRESS)
         weso_curve_info = fetch_weso_curve_info()
         tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
         prices = fetch_oracle_prices()
