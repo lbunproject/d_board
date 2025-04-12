@@ -51,6 +51,20 @@ def fetch_weso_curve_info():
         return {}
     return response.json().get("data", {})
 
+# Function to fetch WESO curve info
+def fetch_weso_token_info():
+    query_data = {
+        "token_info": {}
+    }
+    query_data_encoded = base64.b64encode(json.dumps(query_data).encode()).decode()
+    url = f"https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms/smart/{query_data_encoded}"
+
+    response = requests.get(url)
+    if response.status_code != 200:
+        st.error(f"Failed to fetch WESO token info. Error: {response.status_code} - {response.reason}")
+        return {}
+    return response.json().get("data", {})
+
 # Function to fetch Oracle prices
 def fetch_oracle_prices():
     url = "https://oracle.lbunproject.tech:8443/latest"
@@ -162,8 +176,8 @@ with tabs[0]:
     try:
         # WESO Metrics Section
         st.markdown("### 📊 TBC Metrics")
-        available_weso = fetch_cw20_balance('terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms', CONTRACT_ADDRESS)
         weso_curve_info = fetch_weso_curve_info()
+        weso_token_info = fetch_weso_token_info()
         tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
         prices = fetch_oracle_prices()
 
@@ -173,10 +187,12 @@ with tabs[0]:
         tax_collected = float(weso_curve_info.get("tax_collected", 0)) / 1_000_000
         reserve_price = prices.get("LUNC", 0)
 
-        total_supply = circulating_supply + available_weso
+        total_supply = float(weso_token_info.get("total_supply", 0)) / 1_000_000
         price = spot_price * reserve_price
         market_cap = circulating_supply * price
         tvl = reserve * reserve_price
+        available_weso = total_supply - circulating_supply
+        
 
         metrics = [
             ("Available Supply", f"{available_weso:,.6f}"),
