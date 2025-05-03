@@ -178,31 +178,31 @@ with tabs[0]:
         st.markdown("### 📊 TBC Metrics")
         weso_curve_info = fetch_weso_curve_info()
         weso_token_info = fetch_weso_token_info()
-        tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
+        weso_tbc_reserve = fetch_native_balance(CONTRACT_ADDRESS)
         prices = fetch_oracle_prices()
 
-        circulating_supply = float(weso_curve_info.get("supply", 0)) / 1_000_000
-        spot_price = float(weso_curve_info.get("spot_price", 0)) / 1_000_000
+        weso_circulating_supply = float(weso_curve_info.get("supply", 0)) / 1_000_000
+        weso_spot_price = float(weso_curve_info.get("spot_price", 0)) / 1_000_000
         reserve = float(weso_curve_info.get("reserve", 0)) / 1_000_000
         tax_collected = float(weso_curve_info.get("tax_collected", 0)) / 1_000_000
         reserve_price = prices.get("LUNC", 0)
 
         total_supply = float(weso_token_info.get("total_supply", 0)) / 1_000_000
-        price = spot_price * reserve_price
-        market_cap = circulating_supply * price
+        price = weso_spot_price * reserve_price
+        market_cap = weso_circulating_supply * price
         tvl = reserve * reserve_price
-        available_weso = total_supply - circulating_supply
+        available_weso = total_supply - weso_circulating_supply
         
 
         metrics = [
             ("Available Supply", f"{available_weso:,.6f}"),
-            ("Circulating Supply", f"{circulating_supply:,.6f}"),
+            ("Circulating Supply", f"{weso_circulating_supply:,.6f}"),
             ("Total Supply", f"{total_supply:,.6f}"),
-            ("Spot Price (LUNC Ratio)", f"{spot_price:.6f} (${price:,.6f})"),
+            ("Spot Price (LUNC Ratio)", f"{weso_spot_price:.6f} (${price:,.6f})"),
             ("Market Cap (USD)", f"${market_cap:,.2f}"),
             ("Total Value Locked (USD)", f"${tvl:,.2f}"),
             ("Tax Collected (LUNC)", f"{tax_collected:,.6f}"),
-            ("TBC Reserve (LUNC)", f"{tbc_reserve:,.6f} (${tbc_reserve * reserve_price:,.2f})")
+            ("TBC Reserve (LUNC)", f"{weso_tbc_reserve:,.6f} (${weso_tbc_reserve * reserve_price:,.2f})")
         ]
 
         for i in range(0, len(metrics), 2):
@@ -213,12 +213,20 @@ with tabs[0]:
 
         # DAO Wallets Section
         st.markdown("### 🏛️ Luna Classic DAO Treasury")
-        tnb = fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
+        tlnb = fetch_native_balance('terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
+        tlcw = fetch_cw20_balance('terra10fusc7487y4ju2v5uavkauf3jdpxx9h8sc7wsqdqg4rne8t4qyrq8385q6', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
+        twcw = fetch_cw20_balance('terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
+        tbcw = fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
+
+        lunc_pool_amt = fetch_native_balance('terra12qc2mah0eyzsppcmekelqrhuxaa8jwwht0lv07xvv2t9wnepk58sg28yh8')
+        base_pool_amt = fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m', 'terra12qc2mah0eyzsppcmekelqrhuxaa8jwwht0lv07xvv2t9wnepk58sg28yh8')
+        base_spot_price = lunc_pool_amt / base_pool_amt
+
         dao_metrics = [
-            ("LUNC", f"{tnb:,.6f} (${tnb * reserve_price:,.2f})"),
-            ("cwLUNC ", f"{fetch_cw20_balance('terra10fusc7487y4ju2v5uavkauf3jdpxx9h8sc7wsqdqg4rne8t4qyrq8385q6', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
-            ("WESO ", f"{fetch_cw20_balance('terra13ryrrlcskwa05cd94h54c8rnztff9l82pp0zqnfvlwt77za8wjjsld36ms', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}"),
-            ("BASE ", f"{fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq'):,.6f}")
+            ("LUNC", f"{tlnb:,.6f} (${tlnb * reserve_price:,.2f})"),
+            ("cwLUNC ", f"{tlcw:,.6f} (${tlcw * reserve_price:,.2f})"),
+            ("WESO ", f"{twcw:,.6f} (${twcw * weso_spot_price * reserve_price:,.2f})"),
+            ("BASE ", f"{tbcw:,.6f} (${tbcw * base_spot_price * reserve_price:,.2f})"),
         ]
 
         for i in range(0, len(dao_metrics), 2):
