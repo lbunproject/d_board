@@ -219,7 +219,7 @@ with tabs[0]:
         tbcw = fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m', 'terra1wkdm6wcm4srahrvp09jea7csfq3yuacc4gmyft6p6n6pls9wy5js9lqhqq')
 
         lunc_pool_amt = fetch_native_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m')
-        base_pool_amt = fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m','terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m')
+        base_pool_amt = fetch_cw20_balance('terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m', 'terra1uewxz67jhhhs2tj97pfm2egtk7zqxuhenm4y4m')
         base_spot_price = lunc_pool_amt / base_pool_amt
 
         dao_metrics = [
