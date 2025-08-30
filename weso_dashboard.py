@@ -291,10 +291,13 @@ with tabs[1]:
 
         param_info = fetch_data(CONTRACT_ADDRESS, "param_info")
         # Adjust percentage values by dividing by 10 and formatting
-        for key in ["reserve_pool_pct", "operations_pool_pct", "growth_pool_pct", "development_pool_pct", "project_tax_pct", "to_validator_pct", "phase_one_tax"]:
+        for key in ["reserve_pool_pct", "operations_pool_pct", "growth_pool_pct", "development_pool_pct", "project_tax_pct", "to_validator_pct", "phase_one_tax", "affiliate_pct"]:
             if key in param_info:
                 param_info[key] = f"{param_info[key] / 10:.1f}%"
         render_query_result("Param Info", param_info)
+
+        curve_info = fetch_data(CONTRACT_ADDRESS, "curve_info")
+        render_query_result("Curve Info", curve_info)
 
         acct_info = fetch_data(CONTRACT_ADDRESS, "acct_info")
         render_query_result("Account Info", acct_info)
@@ -305,5 +308,9 @@ with tabs[1]:
         safety_info = fetch_data(CONTRACT_ADDRESS, "safety_info")
         render_query_result("Safety Info", safety_info)
 
+        limit_config_info = fetch_data(CONTRACT_ADDRESS, "limit_config_info")
+        render_query_result("Limits Info", limit_config_info)
+
     except Exception as e:
         st.error(f"Error loading queries: {e}")
+
